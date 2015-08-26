@@ -1,0 +1,116 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{E4E121E6-55D3-440D-A328-856621531128}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{93E0B94B-F509-4BDA-B818-8024A380C2A5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{7A9FC09E-A08D-4550-9899-B20474F44652}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhoneSystem.Common", "PhoneSystem.Common\PhoneSystem.Common.csproj", "{455451D6-3B55-4D2D-9101-E269094CE8FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhoneSystem.Contracts", "PhoneSystem.Data\PhoneSystem.Contracts\PhoneSystem.Contracts.csproj", "{1571D6C7-BA85-418A-98D9-23CD863E6BD3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhoneSystem.Data", "PhoneSystem.Data\PhoneSystem.Data\PhoneSystem.Data.csproj", "{D50CD6B4-291D-402E-B401-83625E9AD379}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhoneSystem.Models", "PhoneSystem.Data\PhoneSystem.Models\PhoneSystem.Models.csproj", "{E22F0406-E88C-4B72-A586-EFA9C220FC42}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrasturcture", "Infrasturcture", "{1BADC7FD-A586-489D-9808-3A3D95561B85}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhoneSystem.Infrastucture", "PhoneSystem.Infrastucture\PhoneSystem.Infrastucture.csproj", "{34CAE16C-820F-473B-AF01-5FEB80DC4624}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhoneSystem.Web", "PhoneSystem.Web\PhoneSystem.Web\PhoneSystem.Web.csproj", "{1084E0BF-9057-498E-ABB3-14B939A936CC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhoneSystem.Web.Tests", "PhoneSystem.Web.Tests\PhoneSystem.Web.Tests.csproj", "{880B7C61-A78B-4217-A89C-3C66FB24EFB0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{16DA8869-02F7-423D-9F29-25AB08663F2B}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 8
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://srv-app-11:8080/tfs/tfs
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = PhoneSystem.Common\\PhoneSystem.Common.csproj
+		SccProjectTopLevelParentUniqueName1 = PhoneSystem.sln
+		SccProjectName1 = PhoneSystem.Common
+		SccLocalPath1 = PhoneSystem.Common
+		SccProjectUniqueName2 = PhoneSystem.Data\\PhoneSystem.Contracts\\PhoneSystem.Contracts.csproj
+		SccProjectTopLevelParentUniqueName2 = PhoneSystem.sln
+		SccProjectName2 = PhoneSystem.Data/PhoneSystem.Contracts
+		SccLocalPath2 = PhoneSystem.Data\\PhoneSystem.Contracts
+		SccProjectUniqueName3 = PhoneSystem.Data\\PhoneSystem.Data\\PhoneSystem.Data.csproj
+		SccProjectTopLevelParentUniqueName3 = PhoneSystem.sln
+		SccProjectName3 = PhoneSystem.Data/PhoneSystem.Data
+		SccLocalPath3 = PhoneSystem.Data\\PhoneSystem.Data
+		SccProjectUniqueName4 = PhoneSystem.Data\\PhoneSystem.Models\\PhoneSystem.Models.csproj
+		SccProjectTopLevelParentUniqueName4 = PhoneSystem.sln
+		SccProjectName4 = PhoneSystem.Data/PhoneSystem.Models
+		SccLocalPath4 = PhoneSystem.Data\\PhoneSystem.Models
+		SccProjectUniqueName5 = PhoneSystem.Infrastucture\\PhoneSystem.Infrastucture.csproj
+		SccProjectTopLevelParentUniqueName5 = PhoneSystem.sln
+		SccProjectName5 = PhoneSystem.Infrastucture
+		SccLocalPath5 = PhoneSystem.Infrastucture
+		SccProjectUniqueName6 = PhoneSystem.Web.Tests\\PhoneSystem.Web.Tests.csproj
+		SccProjectTopLevelParentUniqueName6 = PhoneSystem.sln
+		SccProjectName6 = PhoneSystem.Web.Tests
+		SccLocalPath6 = PhoneSystem.Web.Tests
+		SccProjectUniqueName7 = PhoneSystem.Web\\PhoneSystem.Web\\PhoneSystem.Web.csproj
+		SccProjectTopLevelParentUniqueName7 = PhoneSystem.sln
+		SccProjectName7 = PhoneSystem.Web/PhoneSystem.Web
+		SccLocalPath7 = PhoneSystem.Web\\PhoneSystem.Web
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{455451D6-3B55-4D2D-9101-E269094CE8FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{455451D6-3B55-4D2D-9101-E269094CE8FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{455451D6-3B55-4D2D-9101-E269094CE8FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{455451D6-3B55-4D2D-9101-E269094CE8FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1571D6C7-BA85-418A-98D9-23CD863E6BD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1571D6C7-BA85-418A-98D9-23CD863E6BD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1571D6C7-BA85-418A-98D9-23CD863E6BD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1571D6C7-BA85-418A-98D9-23CD863E6BD3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D50CD6B4-291D-402E-B401-83625E9AD379}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D50CD6B4-291D-402E-B401-83625E9AD379}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D50CD6B4-291D-402E-B401-83625E9AD379}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D50CD6B4-291D-402E-B401-83625E9AD379}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E22F0406-E88C-4B72-A586-EFA9C220FC42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E22F0406-E88C-4B72-A586-EFA9C220FC42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E22F0406-E88C-4B72-A586-EFA9C220FC42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E22F0406-E88C-4B72-A586-EFA9C220FC42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34CAE16C-820F-473B-AF01-5FEB80DC4624}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34CAE16C-820F-473B-AF01-5FEB80DC4624}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34CAE16C-820F-473B-AF01-5FEB80DC4624}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34CAE16C-820F-473B-AF01-5FEB80DC4624}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1084E0BF-9057-498E-ABB3-14B939A936CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1084E0BF-9057-498E-ABB3-14B939A936CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1084E0BF-9057-498E-ABB3-14B939A936CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1084E0BF-9057-498E-ABB3-14B939A936CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{880B7C61-A78B-4217-A89C-3C66FB24EFB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{880B7C61-A78B-4217-A89C-3C66FB24EFB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{880B7C61-A78B-4217-A89C-3C66FB24EFB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{880B7C61-A78B-4217-A89C-3C66FB24EFB0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{455451D6-3B55-4D2D-9101-E269094CE8FC} = {93E0B94B-F509-4BDA-B818-8024A380C2A5}
+		{1571D6C7-BA85-418A-98D9-23CD863E6BD3} = {E4E121E6-55D3-440D-A328-856621531128}
+		{D50CD6B4-291D-402E-B401-83625E9AD379} = {E4E121E6-55D3-440D-A328-856621531128}
+		{E22F0406-E88C-4B72-A586-EFA9C220FC42} = {E4E121E6-55D3-440D-A328-856621531128}
+		{34CAE16C-820F-473B-AF01-5FEB80DC4624} = {1BADC7FD-A586-489D-9808-3A3D95561B85}
+		{1084E0BF-9057-498E-ABB3-14B939A936CC} = {7A9FC09E-A08D-4550-9899-B20474F44652}
+		{880B7C61-A78B-4217-A89C-3C66FB24EFB0} = {7A9FC09E-A08D-4550-9899-B20474F44652}
+	EndGlobalSection
+EndGlobal
