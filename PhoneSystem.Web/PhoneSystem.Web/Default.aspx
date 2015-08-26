@@ -6,7 +6,9 @@
         <asp:HyperLink runat="server" ID="HyperLink" NavigateUrl="~/Account/Login.aspx" CssClass="btn btn-lg btn-primary">
            Please login
         </asp:HyperLink>
-        <br />
+        <br />    
+
+        asd
         <div class="alert alert-info">When you got your card, you have received username and password</div>
     </div>
 </asp:Content>
