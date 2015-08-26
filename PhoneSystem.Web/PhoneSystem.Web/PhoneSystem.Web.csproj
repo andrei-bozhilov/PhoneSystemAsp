@@ -246,7 +246,6 @@
     <Content Include="Controls\Grid.ascx" />
     <Content Include="Controls\Noty.ascx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="HtmlPage1.html" />
     <Content Include="Icon.png" />
     <Content Include="Images\loading.gif" />
     <Content Include="Images\loading3.gif" />
