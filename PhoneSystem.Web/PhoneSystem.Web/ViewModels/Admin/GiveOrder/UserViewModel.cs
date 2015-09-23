@@ -6,7 +6,6 @@
 
     using PhoneSystem.Infrastucture.Mapping;
     using PhoneSystem.Models;
-    using PhoneSystem.Common;
 
     public class UserViewModel : IMapFrom<User>, IHaveCustomMappings
     {

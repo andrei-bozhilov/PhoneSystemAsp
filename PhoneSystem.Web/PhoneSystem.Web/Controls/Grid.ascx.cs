@@ -223,6 +223,11 @@
 
         protected void Page_Init()
         {
+            if (Request.QueryString["page"] == null)
+            {
+                Response.Redirect(this.Request.Url.AbsolutePath + "?page=" + 1);
+            }
+
             if (this.CreateBodyTemplate != null)
             {
                 this.CreateBodyTemplate.InstantiateIn(this.PlaceHolderCreateBody);
@@ -288,10 +293,10 @@
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Request.QueryString["page"] == null)
-            {
-                Response.Redirect(this.Request.Url.AbsolutePath + "?page=" + 1);
-            }
+            //if (Request.QueryString["page"] == null)
+            //{
+            //    Response.Redirect(this.Request.Url.AbsolutePath + "?page=" + 1);
+            //}
         }
 
         public void GetData<T>(IQueryable<T> obj)

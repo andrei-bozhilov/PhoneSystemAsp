@@ -2,7 +2,6 @@
 {
     using System;
     using System.Linq;
-    using System.Web.ModelBinding;
 
     using PhoneSystem.Web.Presenters.Admin;
     using PhoneSystem.Models;
@@ -66,7 +65,7 @@
         protected void BtnCreate_Click(object sender, EventArgs e)
         {
             var model = new JobTitle();
-            this.TryUpdateModel(model, new FormValueProvider(this.ModelBindingExecutionContext));
+            this.TryUpdateModel(model, this.FormCreaterCreate.Prefix);
             if (this.ModelState.IsValid)
             {
                 this.Create(model);
@@ -78,7 +77,7 @@
         protected void ButtonEdit_Click(object sender, EventArgs e)
         {
             var model = new JobTitle();
-            TryUpdateModel(model, new FormValueProvider(this.ModelBindingExecutionContext));
+            TryUpdateModel(model, this.FormCreaterEdit.Prefix);
             if (this.ModelState.IsValid)
             {
                 this.Edit(model);

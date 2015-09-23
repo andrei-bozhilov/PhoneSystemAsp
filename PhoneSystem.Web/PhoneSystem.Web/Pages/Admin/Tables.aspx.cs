@@ -1,8 +1,7 @@
 ﻿namespace PhoneSystem.Web.Pages.Admin
 {
-    using Presenters.Admin;
     using System;
-
+    using Presenters.Admin;
 
     public partial class Tables : AdminBasePage<object, TablePresenter>
     {
@@ -14,7 +13,6 @@
                  "Tables",
                  this.subMenu,
                  new string[] { "Users", "Phones", "Departments", "JobTitles" });
-
         }
     }
 }

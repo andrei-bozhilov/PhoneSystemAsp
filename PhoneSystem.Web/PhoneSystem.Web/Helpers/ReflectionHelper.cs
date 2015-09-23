@@ -40,5 +40,39 @@
             }
             return false;
         }
+
+        public static void SetValue<T>(T model, string propertyName, string value)
+        {
+            PropertyInfo propertyInfo = model.GetType().GetProperty(propertyName);
+            if (propertyInfo != null)
+            {
+                propertyInfo.SetValue(model, Converts(value, propertyInfo), null);
+            }
+        }
+
+        public static object Converts(string value, PropertyInfo propertyInfo)
+        {
+            Type type = propertyInfo.PropertyType;
+
+            //handle nullable types
+            if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    return null;
+                }
+                else
+                {
+                    return Convert.ChangeType(value, type.GetGenericArguments()[0]);
+                }
+            }
+            //handle enums
+            if (propertyInfo.PropertyType.IsEnum)
+            {
+                return Enum.Parse(propertyInfo.PropertyType, value);
+            }
+
+            return Convert.ChangeType(value, propertyInfo.PropertyType);
+        }
     }
 }

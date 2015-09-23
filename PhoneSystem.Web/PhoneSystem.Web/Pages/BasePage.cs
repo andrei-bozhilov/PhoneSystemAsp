@@ -8,6 +8,10 @@
     using PhoneSystem.Web.Presenters;
     using PhoneSystem.Web.Presenters.Results;
     using System.Web.UI.WebControls;
+    using System;
+    using Helpers;
+    using System.Reflection;
+    using System.ComponentModel.DataAnnotations;
 
     public enum MessageType
     {
@@ -136,6 +140,39 @@
         {
             Button btn = (Button)sender;
             return btn.CommandArgument;
+        }
+
+        public bool TryUpdateModel<T>(T model, string prefix)
+        {
+            var keys = this.Request.Form.AllKeys
+                .Where(x => x.StartsWith(prefix));
+
+            foreach (var key in keys)
+            {
+                string value = this.Request.Form[key];
+                string keyWithoutPrefix = key.Replace(prefix, string.Empty);
+                ReflectionHelper.SetValue(model, keyWithoutPrefix, value);
+            }
+
+            Type typeData = typeof(T);
+            PropertyInfo[] props =
+                typeData.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+            foreach (var prop in props)
+            {
+                var validationAttributes = prop.GetCustomAttributes<ValidationAttribute>();
+                foreach (var validationAttribute in validationAttributes)
+                {
+                    object currentPropValue = prop.GetValue(model);
+                    if (!validationAttribute.IsValid(currentPropValue))
+                    {
+                        string errorMessage = validationAttribute.FormatErrorMessage(prop.Name);
+                        this.ModelState.AddModelError("Error", errorMessage);
+                    }
+                }
+            }
+
+            return this.ModelState.IsValid;
         }
     }
 }

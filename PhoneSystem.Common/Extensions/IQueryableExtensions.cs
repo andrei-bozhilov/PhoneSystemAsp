@@ -17,7 +17,9 @@
             var props = TypeDescriptor
                 .GetProperties(type)
                 .Cast<PropertyDescriptor>()
-                .Where(propertyInfo => propertyInfo.PropertyType.Namespace.Equals("System") || propertyInfo.PropertyType.Namespace.Equals("PhoneSystem.Models"))
+                .Where(propertyInfo => propertyInfo.PropertyType.Namespace.Equals("System")
+                        || propertyInfo.PropertyType.Namespace.Equals("PhoneSystem.Models")
+                        || propertyInfo.PropertyType.Namespace.Equals("PhoneSystem.Web"))
                 .Where(propertyInfo => propertyInfo.IsReadOnly == false)
                 .ToArray();
 

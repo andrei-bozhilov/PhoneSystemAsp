@@ -65,7 +65,7 @@
         protected void BtnCreat_Click(object sender, EventArgs e)
         {
             var model = new Phone();
-            this.TryUpdateModel(model, new FormValueProvider(this.ModelBindingExecutionContext));
+            this.TryUpdateModel(model, this.FormCreaterCreate.Prefix);
             if (this.ModelState.IsValid)
             {
                 this.Create(model);
@@ -77,7 +77,7 @@
         protected void ButtonEdit_Click(object sender, EventArgs e)
         {
             var model = new Phone();
-            this.TryUpdateModel(model, new FormValueProvider(this.ModelBindingExecutionContext));
+            this.TryUpdateModel(model, this.FormCreaterEdit.Prefix);
             if (this.ModelState.IsValid)
             {
                 this.Edit(model);

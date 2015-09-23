@@ -4,7 +4,6 @@
     using System.Linq;
 
     using PhoneSystem.Web.Presenters.Admin;
-    using PhoneSystem.Web.ViewModels.Admin;
     using PhoneSystem.Web.ViewModels.Admin.Orders;
 
     public partial class Orders : AdminBasePage<IQueryable<OrdersViewModel>, OrderPresenter>

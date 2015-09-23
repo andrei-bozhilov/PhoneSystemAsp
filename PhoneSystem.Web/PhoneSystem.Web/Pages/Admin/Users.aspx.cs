@@ -4,7 +4,6 @@
     using System.Linq;
 
     using PhoneSystem.Web.Presenters.Admin;
-    using PhoneSystem.Web.ViewModels.Admin;
     using PhoneSystem.Web.Controls;
     using PhoneSystem.Web.ViewModels.Admin.GiveOrder;
 
@@ -12,6 +11,8 @@
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            this.TakeViewModel(new UserPresenter());
+
             if (!this.IsPostBack)
             {
                 this.GetAdminMenuOptions(this.menu);
@@ -20,14 +21,18 @@
                      "Tables",
                      this.subMenu,
                      new string[] { "Users", "Phones", "Departments", "JobTitles" });
+
+
+                this.GridUsers.GetData(this.ViewModel);
+
+                this.GridUsers.DataBind();
             }
 
-            this.TakeViewModel(new UserPresenter());
             this.GridUsers.GridButtons = GridButtons.View;
             this.GridUsers.ShowId = false;
             this.GridUsers.OnBtnViewClicked += GridUsers_OnBtnViewClicked;
-            this.GridUsers.GetData(this.ViewModel);
             this.GridUsers.ShowViewModel = false;
+
         }
 
         void GridUsers_OnBtnViewClicked(object sender, EventArgs e)

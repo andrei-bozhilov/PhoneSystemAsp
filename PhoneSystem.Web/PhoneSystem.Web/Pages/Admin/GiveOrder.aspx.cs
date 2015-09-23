@@ -11,7 +11,6 @@
 
     using PhoneSystem.Models;
     using PhoneSystem.Web.Presenters.Admin;
-    using PhoneSystem.Web.ViewModels.Admin;
     using PhoneSystem.Web.BindModels.Admin;
     using Presenters;
     using Presenters.Results;
@@ -37,7 +36,6 @@
                 this.DropDownListPhone.DataSource = this.ViewModel.FreePhoneNumbers.ToList();
                 this.DropDownListPhoneOldUser.DataSource = this.DropDownListPhone.DataSource;
                 this.OldUser.Attributes.Add("data-source", JsonConvert.SerializeObject(this.ViewModel.Users.ToList()));
-
                 this.DataBind();
             }
         }

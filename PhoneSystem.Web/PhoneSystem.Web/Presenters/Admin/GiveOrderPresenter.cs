@@ -8,9 +8,7 @@
     using AutoMapper.QueryableExtensions;
 
     using PhoneSystem.Models;
-    using PhoneSystem.Web.ViewModels.Admin;
     using BindModels.Admin;
-    using Results;
     using PhoneSystem.Web.ViewModels.Admin.GiveOrder;
 
     public class GiveOrderPresenter : BasePresenter<GiveOrderViewModel>

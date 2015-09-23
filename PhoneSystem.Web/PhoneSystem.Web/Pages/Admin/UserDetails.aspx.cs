@@ -1,16 +1,11 @@
 ﻿namespace PhoneSystem.Web.Pages.Admin
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
-    using System.Web;
-    using System.Web.UI;
     using System.Web.UI.WebControls;
-
-    using PhoneSystem.Web.ViewModels.Admin;
-    using PhoneSystem.Models;
-    using PhoneSystem.Web.Presenters.Admin;
     using System.Web.ModelBinding;
+
+    using PhoneSystem.Web.Presenters.Admin;
     using PhoneSystem.Web.Controls;
     using PhoneSystem.Web.ViewModels.Admin.Orders;
     using PhoneSystem.Web.ViewModels.Admin.UserDetails;
@@ -30,14 +25,14 @@
                     this.subMenu,
                     new string[] { "Users", "Phones", "Departments", "JobTitles" },
                     "Users");
-            }
 
-            this.FormCreaterUser.CreateForm(this.ViewModel.UserInfo);
-            this.CheckBoxIsAdmin.Checked = this.ViewModel.UserInfo.IsAdmin;
-            this.RepeaterPhones.DataSource = this.ViewModel.PhonesInfo.ToList();
-            this.RepeaterPhones.DataBind();
-            this.RepeaterOrders.DataSource = this.ViewModel.OrdersInfo.ToList();
-            this.RepeaterOrders.DataBind();
+                this.RepeaterPhones.DataSource = this.ViewModel.PhonesInfo.ToList();
+                this.RepeaterPhones.DataBind();
+                this.RepeaterOrders.DataSource = this.ViewModel.OrdersInfo.ToList();
+                this.RepeaterOrders.DataBind();
+                this.FormCreaterUser.CreateForm(this.ViewModel.UserInfo);
+                this.CheckBoxIsAdmin.Checked = this.ViewModel.UserInfo.IsAdmin;
+            }
         }
 
         protected void BtnChangeUser_Click(object sender, EventArgs e)
@@ -72,7 +67,7 @@
 
         protected void RepeaterPhones_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
-            if (ListItemType.Item == e.Item.ItemType || ListItemType.AlternatingItem == e.Item.ItemType)
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
                 FormCreater from = (FormCreater)e.Item.FindControl("FormCreaterPhones");
                 from.CreateForm((PhoneInfoViewModel)e.Item.DataItem);
@@ -81,7 +76,7 @@
 
         protected void RepeaterOrders_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
-            if (ListItemType.Item == e.Item.ItemType || ListItemType.AlternatingItem == e.Item.ItemType)
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
                 FormCreater from = (FormCreater)e.Item.FindControl("FormCreaterOrders");
                 from.CreateForm((OrdersViewModel)e.Item.DataItem);
