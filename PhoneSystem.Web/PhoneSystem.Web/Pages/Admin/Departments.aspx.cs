@@ -2,7 +2,6 @@
 {
     using System;
     using System.Linq;
-    using System.Web.ModelBinding;
 
     using PhoneSystem.Web.Presenters.Admin;
     using PhoneSystem.Models;
@@ -24,25 +23,18 @@
                      "Tables",
                      this.subMenu,
                      new string[] { "Users", "Phones", "Departments", "JobTitles" });
-
-                this.DepartmentGrid.GetData(this.ViewModel);
-                this.DepartmentGrid.DataBind();
             }
 
-            this.DepartmentGrid.GridButtons = GridButtons.Crud;
-            this.DepartmentGrid.OnBtnCreateClicked += DepartmentGrid_OnBtnCreateClicked;
-            this.DepartmentGrid.OnBtnDeleteClicked += DepartmentGrid_OnBtnDeleteClicked;
-            this.DepartmentGrid.OnBtnEditClicked += DepartmentGrid_OnBtnEditClicked;
-            this.DepartmentGrid.OnBtnViewClicked += DepartmentGrid_OnBtnViewClicked;
+
+            this.DepartmentGrid.NeedDataSource += DepartmentGrid_NeedDataSource;
         }
 
-        void DepartmentGrid_OnBtnCreateClicked(object sender, EventArgs e)
+        private void DepartmentGrid_NeedDataSource(object sender, EventArgs e)
         {
-            var model = new DepartmentEditViewModel();
-            this.FormCreaterCreate.CreateForm(model);
+            this.DepartmentGrid.DataSource = this.ViewModel;
         }
 
-        void DepartmentGrid_OnBtnViewClicked(object sender, EventArgs e)
+        protected void DepartmentGrid_BtnViewClick(object sender, EventArgs e)
         {
             int id = int.Parse(this.GetIdFromBtnSender(sender));
             var model = new DepartmentDetailViewModel();
@@ -50,7 +42,13 @@
             this.FormCreaterView.CreateForm(model);
         }
 
-        void DepartmentGrid_OnBtnEditClicked(object sender, EventArgs e)
+        protected void DepartmentGrid_BtnCreateClick(object sender, EventArgs e)
+        {
+            var model = new DepartmentEditViewModel();
+            this.FormCreaterCreate.CreateForm(model);
+        }
+
+        protected void DepartmentGrid_BtnEditClick(object sender, EventArgs e)
         {
             int id = int.Parse(this.GetIdFromBtnSender(sender));
             var model = new DepartmentEditViewModel();
@@ -58,7 +56,7 @@
             this.FormCreaterEdit.CreateForm(model);
         }
 
-        void DepartmentGrid_OnBtnDeleteClicked(object sender, EventArgs e)
+        protected void DepartmentGrid_BtnDeleteClick(object sender, EventArgs e)
         {
             int id = int.Parse(this.GetIdFromBtnSender(sender));
             var model = new DepartmentDetailViewModel();
@@ -124,8 +122,7 @@
                 this.TakeViewModel(this.Presenter.GetResult());
             }
 
-            this.DepartmentGrid.GetData(this.ViewModel);
-            this.DepartmentGrid.DataBind();
+            this.DepartmentGrid.ReBind();
         }
     }
 }

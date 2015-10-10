@@ -11,7 +11,9 @@
         </div>
 
         <div class="col-md-10">
-            <cc:Grid ID="PhoneGrid" runat="server">
+            <cc:Grid ID="PhoneGrid" runat="server" GridButtons="Crud" OnBtnCreateClick="PhoneGrid_BtnCreateClick"
+                 OnBtnViewClick ="PhoneGrid_BtnViewClick" OnBtnEditClick="PhoneGrid_BtnEditClick"
+                 OnBtnDeleteClick="PhoneGrid_BtnDeleteClick">
                 <CreateHeaderTemplate>
                     Create New Phone
                 </CreateHeaderTemplate>
@@ -46,7 +48,7 @@
                     <asp:Button Text="Delete" CssClass="btn btn-danger" ID="BtnDelete" OnClick="BtnDelete_Click" runat="server" />
                 </DeleteFooterTemplate>
             </cc:Grid>
-            <cc:Noty id="NotyPhone" runat="server" />
+            <cc:Noty ID="NotyPhone" runat="server" />
         </div>
     </div>
 </asp:Content>

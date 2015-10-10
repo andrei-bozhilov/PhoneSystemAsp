@@ -259,6 +259,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Pages\Admin\Phonebook.aspx" />
     <Content Include="Pages\Admin\Phones.aspx" />
+    <Content Include="Scripts\App\helper.js" />
     <Content Include="WebForm1.aspx" />
     <Content Include="Pages\Admin\Web.config" />
     <Content Include="Pages\User\Web.config" />

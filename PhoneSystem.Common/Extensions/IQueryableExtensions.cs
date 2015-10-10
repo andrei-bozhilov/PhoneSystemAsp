@@ -5,14 +5,21 @@
     using System.ComponentModel;
     using System.Data;
     using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
+    using System.Linq.Expressions;
+    using System.Reflection;
+
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Linq;
+    using System.Linq.Dynamic;
+    using System.Reflection;
 
     public static class IQueryableExtensions
     {
-        public static DataTable ToDataTable<T>(this IQueryable items)
+        public static DataTable ToDataTable(this IQueryable items)
         {
-            Type type = typeof(T);
+            Type type = items.ElementType;
 
             var props = TypeDescriptor
                 .GetProperties(type)

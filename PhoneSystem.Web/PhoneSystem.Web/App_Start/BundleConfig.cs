@@ -37,6 +37,7 @@ namespace PhoneSystem.Web
             bundles.Add(new ScriptBundle("~/bundles/app").Include(
                             "~/Scripts/noty/jquery.noty.js",
                             "~/Scripts/noty/layouts/center.js",
+                            "~/Scripts/App/helper.js",
                             "~/Scripts/App/app.js",
                             "~/Scripts/App/noty.js",
                             "~/Scripts/jquery.validate.js",

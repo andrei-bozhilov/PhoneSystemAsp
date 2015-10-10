@@ -5,6 +5,10 @@
 <%--<div>
     <input type="text" runat="server" id="Proba" value="" />
 </div>--%>
+<div id="loading" style="display: none;">
+    <img src="../../Images/loading.gif" width="50" />
+</div>
+
 
 <div class="row">
     <div class="col-md-6">
@@ -22,8 +26,10 @@
                 <div class="panel-body">
                     <cc:FormCreater ID="FormCreaterFilter" runat="server" />
                     <div class="pull-right">
-                        <asp:Button Text="Search" runat="server" ID="GridBtnSearch" CssClass="btn btn-primary" OnClick="GridBtnSearch_Click" />
-                        <asp:Button Text="Clear" runat="server" ID="GridBtnClear" CssClass="btn btn-warning" OnClick="GridBtnClear_Click" />
+                        <asp:Button runat="server" Text="Search" CssClass="btn btn-primary" ID="GridBtnSearch" OnClick="GridBtnSearch_Click" />
+                        <asp:Button runat="server" Text="Clear" CssClass="btn btn-warning" ID="GridBtnClear" OnClick="GridBtnClear_Click" />
+                        <%-- <button class="btn btn-primary" id="GridBtnSearch" runat="server" onserverclick="GridBtnSearch_Click">search</button>
+                                <button class="btn btn-warning" id="GridBtnClear" runat="server" onserverclick="GridBtnClear_Click">clear</button>--%>
                     </div>
                 </div>
             </div>
@@ -32,14 +38,12 @@
 </div>
 
 <br />
-
 <table class="table table-bordered table-condensed table-hover table-striped table-responsive">
     <thead>
         <tr>
             <asp:Repeater runat="server" ID="RepeaterHeaders" ItemType="System.String">
                 <ItemTemplate>
                     <th>
-
                         <a href="<%# this.ModifyCurrentUrl(this.SortDir[Item])  %>">
                             <span <%# this.Request.Url.AbsoluteUri.Contains("sort=" + Item + "_desc") 
                             ? "class='glyphicon glyphicon-menu-down' style='color: red'" : (this.Request.Url.AbsoluteUri.Contains("sort=" + Item + "_asc") ? "class='glyphicon glyphicon-menu-up' style='color: green'" : "") %>></span>
@@ -71,7 +75,6 @@
                         if (this.GridButtons != PhoneSystem.Web.Controls.GridButtons.None)
                         {%>
                     <td>
-
                         <asp:Button runat="server" CssClass="btn btn-sm btn-info" ID="GridBtnView" Text="View"
                             CommandArgument='<%# Eval("ItemArray[0]")  %>' OnClick="GridBtnView_Click" />
 
@@ -97,39 +100,13 @@
                         </ItemTemplate>
                     </asp:Repeater>
                     <% 
-                        if (this.GridButtons == PhoneSystem.Web.Controls.GridButtons.Crud)
+                        if (this.GridButtons != PhoneSystem.Web.Controls.GridButtons.None)
                         {%>
                     <td style='color: white'>.</td>
                     <% } %>
                 </tr>
             </ItemTemplate>
         </asp:Repeater>
-        <%--<% if (this.data.Rows.Count < this.PageSize)
-           {
-               var rows = this.PageSize - this.data.Rows.Count;
-               for (int row = 0; row < rows; row++)
-               {
-                   this.Response.Write("<tr>");
-                   int cols = 0;
-                   if (this.data.Rows.Count != 0)
-                   {
-                       cols = this.data.Rows[0].ItemArray.Count()
-                       + (this.GridButtons != PhoneSystem.Web.Controls.GridButtons.None ? 1 : 0);
-                   }
-
-                   if (!this.ShowId)
-                   {
-                       cols = cols - 1;
-                   }
-
-                   for (int col = 0; col < cols; col++)
-                   {
-                       this.Response.Write("<td style='color:white'>.</td>");
-                   }
-
-                   this.Response.Write("</tr>");
-               }
-           } %>--%>
     </tbody>
 </table>
 
@@ -145,31 +122,27 @@
                 <span aria-hidden="true">Previous</span>
             </a>
         </li>
-        <%
-            int from = (this.CurrentPage - 2 < 1) ? 1 : this.CurrentPage - 2;
-            int to = (this.CurrentPage + 2 > this.numPages) ? this.numPages : this.CurrentPage + 2;
 
-            if (from + 4 > to && from + 4 <= this.numPages)
-            {
-                to = from + 4;
-            }
 
-            if (to - 4 < from && to - 4 >= 1)
-            {
-                from = to - 4;
-            }
 
-            for (int i = from; i <= to; i++)
-            {
 
-        %>
-        <li <%= i == this.CurrentPage ? "class='active'": "" %>>
+        <asp:Repeater runat="server" ItemType="System.Int32" ID="PagesRepeater" SelectMethod="PagesRepeater_GetData">
+            <ItemTemplate>
+                <li <%# Item  == this.CurrentPage ? "class='active'": "" %>>
+                    <a href='<%# this.ModifyCurrentUrl(this.CurrentSorting, Item)  %>'>
+                        <%# Item  %>
+                    </a>
+                </li>
+            </ItemTemplate>
+        </asp:Repeater>
+
+        <%-- <li <%= i == this.CurrentPage ? "class='active'": "" %>>
             <a href='<%= this.ModifyCurrentUrl(this.CurrentSorting, i)  %>'>
                 <%: i  %>
             </a>
         </li>
 
-        <% } %>
+        <% } %>--%>
 
         <li <%= this.CurrentPage == this.numPages ? "class='disabled'": "" %>>
             <a <%= this.CurrentPage == this.numPages ? "": "href='" + this.ModifyCurrentUrl(this.CurrentSorting, this.CurrentPage + 1) + "'" %>>
@@ -184,7 +157,7 @@
     </ul>
 </nav>
 
-
+<asp:Label ID="ScriptPlaceHolder" runat="server" />
 
 <div class="modal fade" id="CreatModal">
     <div class="modal-dialog">
@@ -279,14 +252,3 @@
 </div>
 <!-- /.modal -->
 
-
-<script type="text/javascript">
-    $('.dropdown-menu').click(function (e) {
-        e.stopPropagation();
-    });
-</script>
-
-
-
-
-<asp:Label ID="ScriptPlaceHolder" runat="server" />

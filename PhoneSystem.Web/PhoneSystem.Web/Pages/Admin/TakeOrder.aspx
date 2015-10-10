@@ -150,7 +150,6 @@
                         </div>
                     </div>
                     <cc:Noty runat="server" ID="NotyTakeOrder" />
-                    <asp:Literal runat="server" ID="Script" Mode="PassThrough" />
                     <div id="dvUControl"></div>
                 </ContentTemplate>
             </asp:UpdatePanel>

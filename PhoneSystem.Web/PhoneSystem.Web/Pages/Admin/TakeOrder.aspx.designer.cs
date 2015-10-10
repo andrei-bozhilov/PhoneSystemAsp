@@ -92,14 +92,5 @@ namespace PhoneSystem.Web.Pages.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::PhoneSystem.Web.Controls.Noty NotyTakeOrder;
-        
-        /// <summary>
-        /// Script control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal Script;
     }
 }

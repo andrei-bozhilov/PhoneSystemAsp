@@ -76,6 +76,24 @@ namespace PhoneSystem.Web.Controls {
         protected global::System.Web.UI.WebControls.Repeater RepeaterEmptyRows;
         
         /// <summary>
+        /// PagesRepeater control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater PagesRepeater;
+        
+        /// <summary>
+        /// ScriptPlaceHolder control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ScriptPlaceHolder;
+        
+        /// <summary>
         /// PlaceHolderCreateHeader control.
         /// </summary>
         /// <remarks>
@@ -182,14 +200,5 @@ namespace PhoneSystem.Web.Controls {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.PlaceHolder PlaceHolderDeleteFooter;
-        
-        /// <summary>
-        /// ScriptPlaceHolder control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label ScriptPlaceHolder;
     }
 }

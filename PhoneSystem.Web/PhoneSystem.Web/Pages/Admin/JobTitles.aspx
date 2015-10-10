@@ -14,7 +14,7 @@
 
         <div class="col-md-10">
             <asp:CheckBox ID="CheckBoxShowDeleted" Text="Show deleted" runat="server" AutoPostBack="true" OnCheckedChanged="CheckBoxShowDeleted_CheckedChanged" />
-            <cc:Grid ID="JobTitleGrid" runat="server">
+            <cc:Grid ID="JobTitleGrid" runat="server" OnBtnCreateClick="JobTitleGrid_BtnCreateClick" OnBtnViewClick="JobTitleGrid_BtnViewClick" OnBtnEditClick="JobTitleGrid_BtnEditClick" OnBtnDeleteClick="JobTitleGrid_BtnDeleteClick" OnNeedDataSource="JobTitleGrid_NeedDataSource" GridButtons="Crud">
                 <CreateHeaderTemplate>
                     Create New Job Title
                 </CreateHeaderTemplate>

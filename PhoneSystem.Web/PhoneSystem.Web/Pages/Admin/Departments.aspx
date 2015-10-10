@@ -14,8 +14,10 @@
 
         <div class="col-md-10">
             <asp:CheckBox Text="Show Deleted" runat="server" ID="CheckBoxShowDeleted" OnCheckedChanged="CheckBoxShowDeleted_CheckedChanged" AutoPostBack="true" />
-            <cc:Grid ID="DepartmentGrid" runat="server">
-
+            <cc:Grid ID="DepartmentGrid" runat="server" OnBtnViewClick="DepartmentGrid_BtnViewClick"
+                OnBtnCreateClick="DepartmentGrid_BtnCreateClick" OnBtnEditClick="DepartmentGrid_BtnEditClick"
+                OnBtnDeleteClick="DepartmentGrid_BtnDeleteClick"
+                GridButtons="Crud">
                 <CreateHeaderTemplate>
                     Create New Department
                 </CreateHeaderTemplate>

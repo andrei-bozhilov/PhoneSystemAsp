@@ -11,6 +11,7 @@
 
     using PhoneSystem.Common.Extensions;
     using System.Collections;
+    using Helpers;
 
     public enum GridButtons
     {
@@ -95,9 +96,9 @@
 
         private GridButtons gridButtons;
 
-        #endregion
+        #endregion        
 
-        private Type typeModel;
+        private string searchQuaryString = null;
 
         protected IList<string> headers;
 
@@ -109,21 +110,27 @@
 
         protected DataTable data;
 
-        public delegate void ButtonView(object sender, EventArgs e);
+        public IQueryable DataSource { get; set; }
 
-        public delegate void ButtonEdit(object sender, EventArgs e);
+        public delegate void ButtonViewClickEventHandler(object sender, EventArgs e);
 
-        public delegate void ButtonDelete(object sender, EventArgs e);
+        public delegate void ButtonEditClickEventHandler(object sender, EventArgs e);
 
-        public delegate void ButtonCreate(object sender, EventArgs e);
+        public delegate void ButtonDeleteClickEventHandler(object sender, EventArgs e);
 
-        public event ButtonView OnBtnViewClicked;
+        public delegate void ButtonCreateClickEventHandler(object sender, EventArgs e);
 
-        public event ButtonEdit OnBtnEditClicked;
+        public delegate void NeedDataSourceEventHandler(object sender, EventArgs e);
 
-        public event ButtonDelete OnBtnDeleteClicked;
+        public event ButtonViewClickEventHandler BtnViewClick;
 
-        public event ButtonCreate OnBtnCreateClicked;
+        public event ButtonEditClickEventHandler BtnEditClick;
+
+        public event ButtonDeleteClickEventHandler BtnDeleteClick;
+
+        public event ButtonCreateClickEventHandler BtnCreateClick;
+
+        public event NeedDataSourceEventHandler NeedDataSource;
 
         #region Options
         public bool HasCrudButtons
@@ -144,25 +151,25 @@
             set { this.pageSize = value; }
         }
 
-        public bool ShowCreateModel
+        public bool ShowCreateModalBox
         {
             get { return this.showCreateModel; }
             set { this.showCreateModel = value; }
         }
 
-        public bool ShowViewModel
+        public bool ShowViewModalBox
         {
             get { return this.showViewModel; }
             set { this.showViewModel = value; }
         }
 
-        public bool ShowEditModel
+        public bool ShowEditModalBox
         {
             get { return this.showEditModel; }
             set { this.showEditModel = value; }
         }
 
-        public bool ShowDeleteModel
+        public bool ShowDeleteModalBox
         {
             get { return this.showDeleteModel; }
             set { this.showDeleteModel = value; }
@@ -293,23 +300,36 @@
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            //if (Request.QueryString["page"] == null)
-            //{
-            //    Response.Redirect(this.Request.Url.AbsolutePath + "?page=" + 1);
-            //}
+            if (!this.IsPostBack)
+            {
+                if (this.NeedDataSource != null)
+                {
+                    ReBind();
+                }
+            }
+
+            this.RegisterStartupScripts();
         }
 
-        public void GetData<T>(IQueryable<T> obj)
+        public void ReBind()
         {
-            Type type = typeof(T);
-            this.typeModel = type;
+            this.NeedDataSource(this, EventArgs.Empty);
+            this.GetData(this.DataSource);
+            this.DataBind();
+        }
+
+        public void GetData(IQueryable obj)
+        {
+            Type type = obj.ElementType;
+
+            this.DataSource = obj;
 
             this.FormCreaterFilter.ShowModelData = false;
             this.FormCreaterFilter.HasValidation = false;
             this.FormCreaterFilter.Prefix = this.Prefix;
             if (obj.Count() > 0)
             {
-                this.FormCreaterFilter.CreateForm(obj.First());
+                this.FormCreaterFilter.CreateForm(ReflectionHelper.CreateObjectOf(type));
             }
 
             var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
@@ -337,17 +357,20 @@
             obj = HandleSorting(obj);
             obj = HandlePaging(obj);
 
-            this.data = obj.ToDataTable<T>();
+            this.data = obj.ToDataTable();
             this.RepeaterHeaders.DataSource = this.headers;
             this.RepeaterRows.DataSource = this.data.Rows;
             this.RepeaterEmptyRows.DataSource = new string[this.PageSize - this.data.Rows.Count];
         }
 
-        private IQueryable<T> HandleFiltering<T>(IQueryable<T> obj)
+        private IQueryable HandleFiltering(IQueryable obj)
         {
-            if (Request.QueryString["search"] != null)
+            string queryString = this.searchQuaryString ?? Request.QueryString["search"];
+            this.searchQuaryString = null; //make it null so Request.QueryString["search"] to has higher priority
+
+            if (queryString != null)
             {
-                var searchStrArr = Request.QueryString["search"].Split(',');
+                var searchStrArr = queryString.Split(',');
 
                 for (int i = 0; i < searchStrArr.Length; i++)
                 {
@@ -378,7 +401,7 @@
             return obj;
         }
 
-        private IQueryable<T> HandlePaging<T>(IQueryable<T> obj)
+        private IQueryable HandlePaging(IQueryable obj)
         {
             this.numItems = obj.Count();
             this.numPages = (numItems + this.PageSize - 1) / this.PageSize;
@@ -390,7 +413,7 @@
             return obj;
         }
 
-        private IQueryable<T> HandleSorting<T>(IQueryable<T> obj)
+        private IQueryable HandleSorting(IQueryable obj)
         {
             if (Request.QueryString["sort"] != null)
             {
@@ -424,10 +447,10 @@
 
         protected void GridBtnCreate_Click(object sender, EventArgs e)
         {
-            if (OnBtnCreateClicked != null)
-                OnBtnCreateClicked(sender, e);
+            if (BtnCreateClick != null)
+                BtnCreateClick(sender, e);
 
-            if ((this.CreateBodyTemplate != null || this.CreateFooterTemplate != null || this.CreateHeaderTemplate != null) && this.ShowCreateModel)
+            if ((this.CreateBodyTemplate != null || this.CreateFooterTemplate != null || this.CreateHeaderTemplate != null) && this.ShowCreateModalBox)
             {
                 this.ScriptPlaceHolder.Text = @"
                 <script>
@@ -444,12 +467,12 @@
 
         protected void GridBtnView_Click(object sender, EventArgs e)
         {
-            if (OnBtnViewClicked != null)
-                OnBtnViewClicked(sender, e);
+            if (BtnViewClick != null)
+                BtnViewClick(sender, e);
 
             var btn = sender as Button;
             if ((this.ViewBodyTemplate != null || this.ViewFooterTemplate != null ||
-                this.ViewHeaderTemplate != null) && this.ShowViewModel)
+                this.ViewHeaderTemplate != null) && this.ShowViewModalBox)
             {
                 this.ScriptPlaceHolder.Text =
                      @"
@@ -467,11 +490,11 @@
 
         protected void GridBtnEdit_Click(object sender, EventArgs e)
         {
-            if (OnBtnEditClicked != null)
-                OnBtnEditClicked(sender, e);
+            if (BtnEditClick != null)
+                BtnEditClick(sender, e);
 
             if ((this.EditBodyTemplate != null || this.EditFooterTemplate != null ||
-                this.EditHeaderTemplate != null) && this.ShowEditModel)
+                this.EditHeaderTemplate != null) && this.ShowEditModalBox)
             {
                 this.ScriptPlaceHolder.Text =
                     @"
@@ -489,10 +512,10 @@
 
         protected void GridBtnDelete_Click(object sender, EventArgs e)
         {
-            if (OnBtnDeleteClicked != null)
-                OnBtnDeleteClicked(sender, e);
+            if (BtnDeleteClick != null)
+                BtnDeleteClick(sender, e);
 
-            if ((this.DeleteBodyTemplate != null || this.DeleteFooterTemplate != null || this.DeleteHeaderTemplate != null) && this.ShowEditModel)
+            if ((this.DeleteBodyTemplate != null || this.DeleteFooterTemplate != null || this.DeleteHeaderTemplate != null) && this.ShowEditModalBox)
             {
                 this.ScriptPlaceHolder.Text =
                         @"
@@ -510,6 +533,11 @@
 
         protected string ModifyCurrentUrl(string sort, int page = 0, string text = null)
         {
+            return this.Request.Url.AbsolutePath + ModifyCurrentQueryString(sort, page, text);
+        }
+
+        protected string ModifyCurrentQueryString(string sort, int page = 0, string text = null)
+        {
             if (page == 0)
             {
                 page = this.CurrentPage;
@@ -519,8 +547,9 @@
             {
                 text = this.CurrentFiltering;
             }
+            // this.searchQuaryString = text.Replace("&search=", ",").Remove(0, 1);
 
-            return this.Request.Url.AbsolutePath + "?page=" + page + sort + text;
+            return "?page=" + page + sort + text;
         }
 
         public override void DataBind()
@@ -573,8 +602,10 @@
         protected void GridBtnSearch_Click(object sender, EventArgs e)
         {
             var keys = this.Request.Form.AllKeys
+                .Where(k => k != null)
                 .Where(k => k.Contains(this.Prefix));
-            var text = "";
+            string search = "";
+            List<string> searchParams = new List<string>();
 
             foreach (var key in keys)
             {
@@ -584,10 +615,18 @@
                 {
                     continue;
                 }
-                text += "&search=" + keyWithoutPrefix + "_" + value;
+                search += "&search=" + keyWithoutPrefix + "_" + value;
+                searchParams.Add(keyWithoutPrefix + "_" + value);
             }
-
-            Response.Redirect(this.ModifyCurrentUrl(this.CurrentSorting, this.CurrentPage, text));
+            this.searchQuaryString = string.Join(",", searchParams);
+            string queryString = ModifyCurrentQueryString(this.CurrentSorting, this.CurrentPage, search);
+            Response.Redirect(this.ModifyCurrentUrl(this.CurrentSorting, this.CurrentPage, queryString));
+            //string script = string.Format(@"
+            //    $(function(){{
+            //        helper.changeLocationClientSide('{0}');
+            //    }})", queryString);
+            //this.ReBind();
+            //ScriptManager.RegisterStartupScript(this, this.GetType(), "changeQueryString", "<script>" + script + "</script>", false);
         }
 
         protected void GridBtnClear_Click(object sender, EventArgs e)
@@ -598,6 +637,42 @@
         public IEnumerable RepeaterEmptyCols_GetData()
         {
             return new string[this.headers.Count];
+        }
+
+        private void RegisterStartupScripts()
+        {
+            string script = @"      
+            $(function() {
+                $('.dropdown-menu').click(function(e) {
+                    e.stopPropagation();
+                })
+             });";
+
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "loadEvents", "<script>" + script + "</script>", false);
+        }
+
+        public IEnumerable<int> PagesRepeater_GetData()
+        {
+            int from = (this.CurrentPage - 2 < 1) ? 1 : this.CurrentPage - 2;
+            int to = (this.CurrentPage + 2 > this.numPages) ? this.numPages : this.CurrentPage + 2;
+
+            if (from + 4 > to && from + 4 <= this.numPages)
+            {
+                to = from + 4;
+            }
+
+            if (to - 4 < from && to - 4 >= 1)
+            {
+                from = to - 4;
+            }
+
+            int[] pages = new int[to - from + 1];
+            for (int i = from; i <= to; i++)
+            {
+                pages[i - 1] = i;
+            }
+
+            return pages;
         }
     }
 }

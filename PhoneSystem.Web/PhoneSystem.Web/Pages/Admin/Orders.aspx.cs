@@ -10,6 +10,8 @@
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            this.TakeViewModel(new OrderPresenter());
+
             if (!this.IsPostBack)
             {
                 this.GetAdminMenuOptions(this.menu);
@@ -18,11 +20,14 @@
                     "Orders",
                     this.subMenu,
                     new string[] { "GiveOrder", "TakeOrder" });
-
-                this.TakeViewModel(new OrderPresenter());
-                this.OrderGrid.GetData(this.ViewModel);
-                this.OrderGrid.DataBind();
             }
+
+            this.OrderGrid.NeedDataSource += OrderGrid_NeedDataSource;
+        }
+
+        private void OrderGrid_NeedDataSource(object sender, EventArgs e)
+        {
+            this.OrderGrid.DataSource = this.ViewModel;
         }
     }
 }

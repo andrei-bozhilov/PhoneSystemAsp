@@ -11,7 +11,7 @@
         </div>
 
         <div class="col-md-10">
-            <cc:Grid ID="GridUsers" runat="server">
+            <cc:Grid ID="GridUsers" runat="server" OnBtnViewClick="GridUsers_BtnViewClick" ShowId="false" ShowViewModalBox="false" GridButtons="View">
                 <ViewBodyTemplate>
                 </ViewBodyTemplate>
             </cc:Grid>

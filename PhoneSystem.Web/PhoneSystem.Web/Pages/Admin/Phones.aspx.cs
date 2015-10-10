@@ -3,11 +3,9 @@
     using System;
     using System.Linq;
     using System.Web.UI.WebControls;
-    using System.Web.ModelBinding;
 
     using PhoneSystem.Models;
     using PhoneSystem.Web.Presenters.Admin;
-    using PhoneSystem.Web.Controls;
     using PhoneSystem.Web.ViewModels.Admin.Phones;
 
     public partial class Phones : AdminCrudPage<IQueryable<PhoneViewModel>, Phone, PhonePresenter>
@@ -19,20 +17,18 @@
             {
                 this.GetAdminMenuOptions(this.menu);
                 this.GetSubMenuOptions(this.menu, "Tables", this.subMenu,
-                     new string[] { "Users", "Phones", "Departments", "JobTitles" });
-
-                this.PhoneGrid.GetData(this.ViewModel);
-                this.PhoneGrid.DataBind();
+                    new string[] { "Users", "Phones", "Departments", "JobTitles" });
             }
 
-            this.PhoneGrid.GridButtons = GridButtons.Crud;
-            this.PhoneGrid.OnBtnCreateClicked += PhoneGrid_OnBtnCreateClicked;
-            this.PhoneGrid.OnBtnDeleteClicked += PhoneGrid_OnBtnDeleteClicked;
-            this.PhoneGrid.OnBtnEditClicked += PhoneGrid_OnBtnEditClicked;
-            this.PhoneGrid.OnBtnViewClicked += PhoneGrid_OnBtnViewClicked;
+            this.PhoneGrid.NeedDataSource += PhoneGrid_OnNeedDataSource;
         }
 
-        void PhoneGrid_OnBtnViewClicked(object sender, EventArgs e)
+        private void PhoneGrid_OnNeedDataSource(object sender, EventArgs e)
+        {
+            this.PhoneGrid.DataSource = this.ViewModel;
+        }
+
+        protected void PhoneGrid_BtnViewClick(object sender, EventArgs e)
         {
             int id = int.Parse(((Button)sender).CommandArgument);
             var model = new PhoneDetailViewModel();
@@ -40,7 +36,7 @@
             this.FormCreaterView.CreateForm(model);
         }
 
-        void PhoneGrid_OnBtnEditClicked(object sender, EventArgs e)
+        protected void PhoneGrid_BtnEditClick(object sender, EventArgs e)
         {
             int id = int.Parse(((Button)sender).CommandArgument);
             var model = new PhoneEditViewModel();
@@ -48,7 +44,7 @@
             this.FormCreaterEdit.CreateForm(model);
         }
 
-        void PhoneGrid_OnBtnDeleteClicked(object sender, EventArgs e)
+        protected void PhoneGrid_BtnDeleteClick(object sender, EventArgs e)
         {
             int id = int.Parse(((Button)sender).CommandArgument);
             var model = new PhoneDetailViewModel();
@@ -56,7 +52,7 @@
             this.FormCreaterDelete.CreateForm(model);
         }
 
-        private void PhoneGrid_OnBtnCreateClicked(object sender, EventArgs e)
+        protected void PhoneGrid_BtnCreateClick(object sender, EventArgs e)
         {
             var model = new PhoneEditViewModel();
             this.FormCreaterCreate.CreateForm(model);
@@ -70,7 +66,7 @@
             {
                 this.Create(model);
                 this.NotyPhone.Update(this);
-                this.ReBindGrid();
+                this.PhoneGrid.ReBind();
             }
         }
 
@@ -82,20 +78,13 @@
             {
                 this.Edit(model);
                 this.NotyPhone.Update(this);
-                this.ReBindGrid();
+                this.PhoneGrid.ReBind();
             }
         }
 
         protected void BtnDelete_Click(object sender, EventArgs e)
         {
 
-        }
-
-        private void ReBindGrid()
-        {
-            this.TakeViewModel(this.Presenter.GetResult());
-            this.PhoneGrid.GetData(this.ViewModel);
-            this.PhoneGrid.DataBind();
         }
     }
 }

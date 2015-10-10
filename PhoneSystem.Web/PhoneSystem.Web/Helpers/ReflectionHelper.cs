@@ -74,5 +74,10 @@
 
             return Convert.ChangeType(value, propertyInfo.PropertyType);
         }
+
+        public static object CreateObjectOf(Type type)
+        {
+            return Activator.CreateInstance(type);
+        }
     }
 }

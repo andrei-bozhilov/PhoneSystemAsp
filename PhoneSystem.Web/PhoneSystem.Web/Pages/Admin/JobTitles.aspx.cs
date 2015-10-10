@@ -5,7 +5,6 @@
 
     using PhoneSystem.Web.Presenters.Admin;
     using PhoneSystem.Models;
-    using PhoneSystem.Web.Controls;
     using PhoneSystem.Web.ViewModels.Admin.JobTitles;
 
     public partial class JobTitles : AdminCrudPage<IQueryable<JobTitleViewModel>, JobTitle, JobTitlePresenter>
@@ -20,25 +19,21 @@
                 this.GetAdminMenuOptions(this.menu);
                 this.GetSubMenuOptions(this.menu, "Tables", this.subMenu,
                      new string[] { "Users", "Phones", "Departments", "JobTitles" });
-
-                this.JobTitleGrid.GetData(this.ViewModel);
-                this.JobTitleGrid.DataBind();
             }
-
-            this.JobTitleGrid.GridButtons = GridButtons.Crud;
-            this.JobTitleGrid.OnBtnViewClicked += JobTitleGrid_OnBtnViewClicked;
-            this.JobTitleGrid.OnBtnEditClicked += JobTitleGrid_OnBtnEditClicked;
-            this.JobTitleGrid.OnBtnDeleteClicked += JobTitleGrid_OnBtnDeleteClicked;
-            this.JobTitleGrid.OnBtnCreateClicked += JobTitleGrid_OnBtnCreateClicked;
         }
 
-        protected void JobTitleGrid_OnBtnCreateClicked(object sender, EventArgs e)
+        protected void JobTitleGrid_NeedDataSource(object sender, EventArgs e)
+        {
+            this.JobTitleGrid.DataSource = this.ViewModel;
+        }
+
+        protected void JobTitleGrid_BtnCreateClick(object sender, EventArgs e)
         {
             var model = new JobTitleEditViewModel();
             this.FormCreaterCreate.CreateForm(model);
         }
 
-        protected void JobTitleGrid_OnBtnViewClicked(object sender, EventArgs e)
+        protected void JobTitleGrid_BtnViewClick(object sender, EventArgs e)
         {
             int jobTitleId = int.Parse(GetIdFromBtnSender(sender));
             var jobTitle = new JobTitleDetailViewModel();
@@ -46,7 +41,7 @@
             this.FormCreaterView.CreateForm(jobTitle);
         }
 
-        protected void JobTitleGrid_OnBtnEditClicked(object sender, EventArgs e)
+        protected void JobTitleGrid_BtnEditClick(object sender, EventArgs e)
         {
             int jobTitleId = int.Parse(GetIdFromBtnSender(sender));
             var jobTitle = new JobTitleEditViewModel();
@@ -54,7 +49,7 @@
             this.FormCreaterEdit.CreateForm(jobTitle);
         }
 
-        void JobTitleGrid_OnBtnDeleteClicked(object sender, EventArgs e)
+        protected void JobTitleGrid_BtnDeleteClick(object sender, EventArgs e)
         {
             int jobTitleId = int.Parse(GetIdFromBtnSender(sender));
             var jobTitle = new JobTitleDetailViewModel();
@@ -118,8 +113,8 @@
             {
                 this.TakeViewModel(this.Presenter.GetResult());
             }
-            this.JobTitleGrid.GetData(this.ViewModel);
-            this.JobTitleGrid.DataBind();
+
+            this.JobTitleGrid.ReBind();
         }
     }
 }

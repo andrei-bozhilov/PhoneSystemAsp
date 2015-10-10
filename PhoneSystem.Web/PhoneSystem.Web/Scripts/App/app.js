@@ -144,10 +144,7 @@ app.GetPhonebookFunction = function () {
         var target = $(e.target);
         var groupBy = '?groupBy=' + target.data('groupby');
 
-        window.history.pushState(groupBy, 'page 2', groupBy);
-        $('form').get(0).setAttribute('action', window.location);
-        __doPostBack('MainContent_UpdatePanelPhonebook', '')
-
+        helper.changeLocationClientSide(groupBy, 'MainContent_UpdatePanelPhonebook');
     });
 
     $('#get-navigation').on('click', 'button', function (e) {
@@ -161,11 +158,8 @@ app.GetPhonebookFunction = function () {
         } else {
             currentSearch += '&get=' + target.data('get');
         }
-
-        window.history.pushState(currentSearch, 'page 2', currentSearch);
-        $('form').get(0).setAttribute('action', window.location);
-        __doPostBack('MainContent_UpdatePanelPhonebook', '')
-    })
+        helper.changeLocationClientSide(currentSearch, 'MainContent_UpdatePanelPhonebook');
+    });
 
     $('#Search').on('click', "", function () {
 
@@ -180,12 +174,8 @@ app.GetPhonebookFunction = function () {
             currentSearch += '&get=' + getValue;
         }
 
-        window.history.pushState(currentSearch, 'page 2', currentSearch);
-        $('form').get(0).setAttribute('action', window.location);
+        helper.changeLocationClientSide(currentSearch, 'MainContent_UpdatePanelPhonebook');
     });
-
-
-
 }
 
 app.uploadImage = function uploadImage(element) {

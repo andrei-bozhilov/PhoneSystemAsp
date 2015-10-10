@@ -12,7 +12,7 @@
         <%: Scripts.Render("~/bundles/modernizr") %>
     </asp:PlaceHolder>
     <webopt:BundleReference runat="server" Path="~/Content/css" />
-    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />  
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
     <link href="Content/bootstrap.css" rel="stylesheet" />
     <link href="Content/Site.css" rel="stylesheet" />
@@ -20,7 +20,7 @@
 </head>
 <body>
     <form runat="server">
-        <asp:ScriptManager runat="server" EnablePageMethods="true">
+        <asp:ScriptManager runat="server" ID="ScriptManager" EnablePageMethods="true">
             <Scripts>
                 <%--To learn more about bundling scripts in ScriptManager see http://go.microsoft.com/fwlink/?LinkID=301884 --%>
                 <%--Framework Scripts--%>

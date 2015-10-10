@@ -15,6 +15,14 @@
     {
         protected bool IsGroupByPhone { get; set; }
 
+        protected void Page_Init(object sender, EventArgs e)
+        {
+            if (this.Request.QueryString["groupBy"] == null)
+            {
+                this.Redirect(this.Request.Url + "?groupBy=name");
+            }
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             this.TakeViewModel(new PhonebookPresenter());
@@ -24,12 +32,6 @@
             }
 
             this.IsGroupByPhone = false;
-
-            if (this.Request.QueryString["groupBy"] == null)
-            {
-                this.Redirect(this.Request.Url + "?groupBy=name");
-            }
-
             this.phoneNumber.Attributes.Add("data-source",
                 JsonConvert.SerializeObject(this.ViewModel.Select(x => x.PhoneNumber)));
 

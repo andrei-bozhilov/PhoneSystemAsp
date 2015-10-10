@@ -47,15 +47,20 @@
 
         public void CreateForm<T>(T formModel)
         {
-            this.Properties = GetProperties(formModel);
+            Type type = formModel.GetType();
+            this.CreateForm(formModel, type);
+        }
+
+        public void CreateForm(object formModel, Type type)
+        {
+            this.Properties = GetProperties(formModel, type);
             this.RepeaterObject.DataSource = this.Properties;
             this.RepeaterObject.DataBind();
         }
 
-        private IList<ObjectProperty> GetProperties<T>(T formData)
+        private IList<ObjectProperty> GetProperties(object formData, Type typeData)
         {
             IList<ObjectProperty> properties = new List<ObjectProperty>();
-            Type typeData = typeof(T);
             PropertyInfo[] propInfos =
                 typeData.GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
